@@ -43,13 +43,20 @@ def add_guide():
 
     return guide_schema.jsonify(guide)
 
-# Endpoint to queary all guides
+# Endpoint to query all guides
 @app.route('/guides', methods=["GET"])
 def get_guides():
     all_guides = Guide.query.all()
     result = guides_schema.dump(all_guides)
 
     return jsonify(result.data)
+
+
+# Endpoint to query a single guide
+@app.route('/guide/<id>', methods=["GET"])
+def get_guide(id):
+    guide = Guide.query.get(id)
+    return guide_schema.jsonify(guide)
 
 
 if __name__ == '__main__':
