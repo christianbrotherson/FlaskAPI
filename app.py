@@ -59,6 +59,25 @@ def get_guide(id):
     return guide_schema.jsonify(guide)
 
 
+# Endpoint to update a guide
+@app.route('/guide/<id>', methods=["PUT"])
+def update_guide(id):
+    guide = Guide.query.get(id)
+    title = request.json['title']
+    content = request.json['content']
+
+    guide.title = title
+    guide.content = content
+
+    db.session.commit()
+    return guide_schema.jsonify(guide)
+
+
+# Endpoint to delete a guide
+@app.route('/guide/<id>', methods=["DELETE"])
+def delete_guide(id):
+    guide = Guide.query.get(id)
+
 if __name__ == '__main__':
     app.run(debug=True)
 
